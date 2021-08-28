@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>javascriptColspan</title>
+    <link rel="stylesheet" type="text/css" href="./styles.css">
+</head>
+<body>
+
+    <table border="1">
+        <tr>
+            <td>teste</td>
+
+        </tr>
+        <tr>
+            <td rowspan="5">Seminovos</td>
+        </tr>
+        <tr>
+            <td>Fabricante</td>
+            <td>Modelo</td>
+            <td>Valor</td>
+        </tr>
+        <tr>
+            <td>Honda</td>
+            <td>WRV</td>
+            <td>R$70.000,00</td>
+        </tr>
+        <tr>
+            <td>Volkswagem</td>
+            <td>Golf GTI</td>
+            <td>R$80.000,00</td>
+        </tr>
+        <tr>
+            <td>Ford</td>
+            <td>Ranger</td>
+            <td>R$90.000,00</td>
+        </tr>
+        <tr>
+            <td colspan="4">Tabela de preços 2019</td>
+        </tr>
+    </table>
+
+    <script>
+        const duplicados = [2,3,4,5].map(function(v) {
+            return v * 2;
+        })
+        console.group('Duplicados')
+        console.log(duplicados)
+        console.groupEnd('Duplicados')
+
+/*
+filter
+fazer um array de true or false deles
+caso todos forem verdadeiros, com every, retorne os clientes que tenham esses dados, id = id
+*/
+        //Every - só sera verdadeiro quando todas as respostas forem verdadeiras
+        const usuarioRespostas = {
+            nome: 'Ayrton',
+            respostas: [
+                { questao_id: '001', acertou: false},
+                { questao_id: '002', acertou: false},
+                { questao_id: '003', acertou: false},
+                { questao_id: '004', acertou: false},
+                { questao_id: '005', acertou: true},
+            ]
+        };
+        const booleano = usuarioRespostas.respostas.every(function(valorResposta) {
+            return valorResposta.acertou;
+        })
+        console.group('Every')
+        console.log(booleano)
+        console.groupEnd('Every')
+
+        //Some  - sera verdadeiro quando conter pelo menos uma resposta verdadeira
+        const booleano2 = usuarioRespostas.respostas.some(function(valorResposta) {
+            return valorResposta.acertou;
+        })
+        console.group('some')
+        console.log(booleano2)
+        console.groupEnd('some')
+
+
+        //flat - une os dados de arrays que estao dentro de um array
+        const usuarioRespostas2 = [
+            {
+                nome: 'Ayrton',
+                respostas: [
+                { questao_id: '001', acertou: false},
+                { questao_id: '002', acertou: false},
+                { questao_id: '003', acertou: false},
+                { questao_id: '004', acertou: false},
+                { questao_id: '005', acertou: true},
+            ]
+            },
+            {
+            nome: 'Cleusa',
+            respostas: [
+                { questao_id: '001', acertou: true},
+                { questao_id: '002', acertou: true},
+                { questao_id: '003', acertou: true},
+                { questao_id: '004', acertou: false},
+                { questao_id: '005', acertou: true},
+            ]
+             },
+             {
+            nome: 'TchuqMePack',
+            respostas: [
+                { questao_id: '001', acertou: false},
+                { questao_id: '002', acertou: false},
+                { questao_id: '003', acertou: true},
+                { questao_id: '004', acertou: true},
+                { questao_id: '005', acertou: false},
+            ]
+        }    
+        ];
+      
+        const todasRespostas = usuarioRespostas2.map(function(usuario) {
+            return usuario.respostas;
+        })
+
+        console.group('flat');
+        console.log(todasRespostas)
+        console.log('todasRespostasComFlat:', todasRespostas.flat());
+        console.table(todasRespostas.flat());
+        console.groupEnd('flat');
+
+        const novoArrayNivel2 = [
+            [
+                [1, 4],
+                [40, 33],
+                [99, 6]
+            ],
+            [
+                [12, 92],
+                [87, 94]
+            ]
+        ];
+        console.group('newArray');
+        console.log(novoArrayNivel2.flat(0));
+        console.log(novoArrayNivel2.flat(1));
+        console.log(novoArrayNivel2.flat(2));
+        console.groupEnd('newArray');
+
+
+        //flatMap - flat + map, unindo todos os arrays sem precisar separar com um .map antes
+        console.group('flatMap')
+        const todasRespostas2 = usuarioRespostas2.flatMap(function(usuario) {
+            return usuario.respostas;
+            //return usuario.respostas.flat(0);
+        })
+        console.log(todasRespostas2)
+        console.groupEnd('flatMap')
+
+        //entries e fromEntries
+        console.group('entries e fromEntries')
+
+        const usuario = {
+            nome: 'ayrton',
+            sobrenome: 'teshima'
+        };
+
+        //pega os valores de um array, e faz varias tulipas
+        console.log('entries exemplo: ', Object.entries(usuario))
+        //pega as tulipas e transforma em arrays
+        console.log('fromEntries exemplo: ', Object.fromEntries([['cidade', 'Rio de Janeiro'], ['signo', 'Aquário']]))
+
+        const invertido = Object.entries(usuario).map(function(array) {
+            return  [
+                array[1],
+                array[0]
+            ]
+        });
+
+        const invertido2 = Object.fromEntries(
+            Object.entries(usuario).map(function(array) {
+            return  [
+                array[1],
+                array[0]
+            ]
+        }))
+
+        console.log('invertendo valor + fromEntries: ', Object.fromEntries(invertido));
+        console.log('invertido2: ',invertido2)
+
+
+        console.log('invertido: ',invertido)
+        console.groupEnd('entries e fromEntries')
+
+
+        //padStart e padEnd
+        console.group('padStart e padEnd')
+
+        console.log('Ayrton'.padStart(20, '-'))
+        console.log('Ayrton'.padEnd(20, '-'))
+
+        const numeroCartao = '12345674489465123';
+        const ultimos4Digitos = numeroCartao.slice(-4);
+
+        console.log(ultimos4Digitos.padStart(20, '*'))
+
+        console.groupEnd('padStart e padEnd')
+
+    </script>    
+</body>
+</html>
